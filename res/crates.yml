@@ -1,0 +1,46 @@
+# KitPvP crates. A key opens one crate; keys are earned by fighting.
+#
+#   Keys.Every-Kills: N     one key for every Nth win
+#   Keys.Streaks:           keys for reaching a win streak   (streak: keys)
+#   Keys.Duel-Win: N        keys for winning a duel
+#   Multi-Open: N           the off-hand key in the crate menu opens up to N at once, without the reel
+#   Roll-Steps: N           how far the reel travels before it stops (closing the menu skips it)
+#
+# Rewards - one line each, "weight" is its share of the chances:
+#   coins:<amount> weight:<n>
+#   new-kit weight:<n>      the first tier of a kit the player does not own
+#   upgrade weight:<n>      the next tier of a kit the player owns
+#   kit:<Kit> weight:<n>    the next tier of exactly that kit
+# When there is nothing left of a kind (every kit owned), its chances go to the other lines.
+#   Price-Bias: 1.0         among the kits a cheaper one is likelier (0 = all alike, 2 = much likelier)
+#   Exclude-Kits: [Poop]    kits this crate never gives
+#   Respect-Permission      true = a rank-only kit only rolls for someone with the rank
+#   Respect-Requirements    true = a tier with unmet Requirements never rolls
+#   Fallback-Coins          what a roll gives when no line at all can apply
+Crates:
+  Kit:
+    Name: '&6Kit Crate'
+    Icon: CHEST
+    Description:
+      - '&7A kit, an upgrade, or coins.'
+    Multi-Open: 10
+    Roll-Steps: 28
+    Keys:
+      Every-Kills: 10
+      Streaks:
+        5: 1
+        10: 1
+        20: 2
+      Duel-Win: 0
+    Price-Bias: 1.0
+    Exclude-Kits: []
+    Respect-Permission: true
+    Respect-Requirements: false
+    Fallback-Coins: 50
+    Rewards:
+      - 'coins:25 weight:40'
+      - 'coins:50 weight:25'
+      - 'coins:100 weight:12'
+      - 'coins:250 weight:3'
+      - 'new-kit weight:12'
+      - 'upgrade weight:8'

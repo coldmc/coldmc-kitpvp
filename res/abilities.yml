@@ -1,0 +1,286 @@
+# KitPvP abilities. A kit (or one tier, or one item) names abilities by id; this file says
+# when each one fires and what it runs.
+#
+#   Trigger:  right_click  left_click  right_click_entity  hit  hurt  kill  death  fall  sneak
+#             projectile_launch  projectile_hit  fish  block_place  block_break  consume  soup
+#             equip  unequip  respawn  tick (every second)  join  leave  upgrade  duel_win
+#   Item:        only while holding this (right_click, hit ...). Leave out for "always".
+#   Projectile:  only for this projectile (ARROW, SNOWBALL, EGG, TRIDENT ...).
+#   Cooldown:    seconds.            Silent: true = no cooldown message.
+#   Cancel:      true = stop the vanilla action (placing the block, the fall damage ...);
+#                false on block_place / block_break = this kit MAY build there.
+#   Run:  what happens, in order. Leave out to call the Skript function  kpability_<id>
+#         (the old server's abilities below are built into the plugin instead: native:<id>,
+#         and the extra lines under each of them are that ability's own settings).
+#         native:<id>          one of the built-in abilities
+#         skript:<function>    console:<command>    player:<command>    message:<text>
+#         effect:<type>:<level>:<seconds>   target-effect:...   sound:<key>   heal:<hearts>
+#         damage:<n> / damage:+<n> / damage:*<n>   cancel   allow   chance:<percent>
+#         %player% %target% %kit% %tier% %arena% are filled in.
+#
+# ADDING AN ABILITY WITH SKRIPT - two steps:
+#   1. In any .sk file:    function kpability_freeze(p: player, victim: entity):
+#                              apply slowness 3 to {_victim} for 4 seconds
+#      Parameters are matched by TYPE, take only what you need:
+#        player = the wearer     entity / living entity = the target (the wearer if there is none)
+#        number = 1st the tier, 2nd the damage      text = 1st kit id, 2nd trigger, 3rd ability id
+#        location = where it happened
+#   2. Here:               freeze: {Name: '&bFreeze', Trigger: hit, Cooldown: 6}
+#      or from the script itself, no file edit at all:
+#        on load:
+#            execute console command "kitpvp admin ability freeze hit 6"
+#   (kpability_<id>: lower case, anything but letters and digits becomes _ .)
+#   A script can also read and change the event: metadata value "kitpvp_damage" of the player
+#   (number) and "kitpvp_cancel" (boolean). Damage that should count as a player's:
+#        execute console command "kitpvp admin damage <attacker> <amount> <victim>"
+#   A summoned mob that should vanish again:   kpRemove({_mob})   (in kitpvp_abilities.sk)
+#   Then /kp admin reload, and add the id to a kit (Abilities: [freeze]) or bind it to an item
+#   in /kp admin itemeditor. The stock functions are in plugins/Skript/scripts/kitpvp_abilities.sk.
+Abilities:
+  Kangaroo:
+    Name: '&aKangaroo leap'
+    Description: ['&7Right-click the rocket to leap. Sneak to leap forward.']
+    Trigger: right_click
+    Item: FIREWORK_ROCKET
+    Cooldown: 5
+    Cancel: true
+    Leap-Up: 1.2
+    Leap-Forward: 0.6
+    Forward-Boost: 1.8
+    Forward-Lift: 0.5
+  Kangaroo-Fall:
+    Name: '&aSoft landing'
+    Trigger: fall
+    Silent: true
+    Run: ['damage:*0.25']
+  Fisherman:
+    Name: '&bReel in'
+    Description: ['&7Hook a player to pull them to you.']
+    Trigger: fish
+    Cooldown: 5
+  Dracula:
+    Name: '&4Blood thirst'
+    Description: ['&7Takes the potion effects of those near you,', '&7and for 15 seconds your hits heal you.']
+    Trigger: right_click
+    Item: REDSTONE
+    Cooldown: 45
+    Cancel: true
+    Lasts-For: 15
+    Steal-Radius: 6
+  Dracula-Bite:
+    Name: '&4Bite'
+    Trigger: hit
+    Silent: true
+    Heal-Per-Hit: 1          # hearts, while Blood thirst runs
+  Hades:
+    Name: '&8Hounds of Hades'
+    Description: ['&7Summons three hounds for 10 seconds.']
+    Trigger: right_click
+    Item: BONE
+    Cooldown: 45
+    Cancel: true
+    Amount-Of-Dogs: 3
+    Dogs-Last-For: 10
+  Thor:
+    Name: '&eLightning'
+    Description: ['&7Lightning strikes everyone within 5 blocks.']
+    Trigger: right_click
+    Item: WOODEN_AXE
+    Cooldown: 10
+    Cancel: true
+    Lightning-Damage: 4
+    Strike-Radius: 5
+  Stomper:
+    Name: '&6Stomp'
+    Description: ['&7Your fall damage lands on those around you.']
+    Trigger: fall
+    Silent: true
+    Stomp-Radius: 5
+    Max-Fall-Damage: 2
+    Max-Damage-Dealt-When-Stomped-While-Shifting: 2
+  Spiderman:
+    Name: '&fWeb'
+    Description: ['&7Throws a ball that webs who it hits for 10 seconds.']
+    Trigger: right_click
+    Item: COBWEB
+    Cooldown: 30
+    Cancel: true
+    Webs-Last-For: 10
+  Prisoner:
+    Name: '&7Prison'
+    Description: ['&7Throws a ball that jails who it hits for 6 seconds.']
+    Trigger: right_click
+    Item: DISPENSER
+    Cooldown: 60
+    Cancel: true
+    Prison-Lasts-For: 6
+    Lava: true
+  Climber:
+    Name: '&aChicken lift'
+    Description: ['&7Your arrow pulls you to where it lands,', '&7and a chicken carries you down.']
+    Trigger: projectile_hit
+    Projectile: ARROW
+    Cooldown: 30
+    Time-Until-Chicken-Disappear: 5
+  Dragon:
+    Name: '&cDragon breath'
+    Description: ['&7Three bursts of fire at everyone in front of you.']
+    Trigger: right_click
+    Item: FIRE_CHARGE
+    Cooldown: 30
+    Cancel: true
+    Amount-Of-Bursts: 3
+    Damage-Dealt: 4
+    Fire-Lasts-For: 5
+    Fire-Range: 10
+  Suicidal:
+    Name: '&cLast resort'
+    Description: ['&7You explode, and take those near you along.']
+    Trigger: right_click
+    Item: REDSTONE_TORCH
+    Cooldown: 30
+    Cancel: true
+    Radius: 5
+    Damage: 16
+  Phantom:
+    Name: '&fFlight'
+    Description: ['&7Fly for 5 seconds.']
+    Trigger: right_click
+    Item: BOOK
+    Cooldown: 45
+    Cancel: true
+    Flight-Lasts-For: 5
+  Timelord:
+    Name: '&eTime stop'
+    Description: ['&7Freezes everyone within 7 blocks for 10 seconds.']
+    Trigger: right_click
+    Item: CLOCK
+    Cooldown: 45
+    Cancel: true
+    Freeze-Radius: 7
+    Freeze-Time: 10
+  Burrower:
+    Name: '&6Burrow'
+    Description: ['&7A brick room around you for 8 seconds.']
+    Trigger: right_click
+    Item: BRICK
+    Cooldown: 60
+    Cancel: true
+    Room-Lasts-For: 8
+  Zen:
+    Name: '&aZen step'
+    Description: ['&7Teleports you to the nearest fighter.']
+    Trigger: right_click
+    Item: SLIME_BALL
+    Cooldown: 60
+    Cancel: true
+    Max-Range: 60
+  Viper:
+    Name: '&2Venom'
+    Description: ['&7Each hit has a 5% chance to poison.']
+    Trigger: hit
+    Silent: true
+    Run: ['chance:5', 'target-effect:poison:1:10']
+  Monk:
+    Name: '&6Disarm'
+    Description: ['&7Right-click a player to shuffle their weapon away.']
+    Trigger: right_click_entity
+    Item: BLAZE_ROD
+    Cooldown: 45
+    Cancel: true
+  Hulk:
+    Name: '&2Smash'
+    Description: ['&7Hurts and throws everyone near you.']
+    Trigger: right_click
+    Item: STICKY_PISTON
+    Cooldown: 30
+    Cancel: true
+    Damage-Dealt: 5
+    Damage-Radius: 10
+  Rider:
+    Name: '&6Steed'
+    Description: ['&7A horse for 10 seconds.']
+    Trigger: right_click
+    Item: DIAMOND_HORSE_ARMOR
+    Cooldown: 45
+    Cancel: true
+    Horse-Lasts-For: 10
+  Summoner:
+    Name: '&fGolem'
+    Description: ['&7An iron golem fights for you for 20 seconds.']
+    Trigger: right_click
+    Item: IRON_BLOCK
+    Cooldown: 70
+    Cancel: true
+    Golem-Lasts-For: 20
+  Souper:
+    Name: '&6Refill'
+    Description: ['&7Moves soup from your backpack into your hotbar.']
+    Trigger: right_click
+    Item: CHEST
+    Cooldown: 15
+    Cancel: true
+  Bane:
+    Name: '&5Bane'
+    Description: ['&7Blinds, slows and weakens who you look at for 8 seconds.', '&7You hit weakly yourself meanwhile.']
+    Trigger: right_click
+    Item: GOLDEN_HOE
+    Cooldown: 45
+    Cancel: true
+    Duration: 8
+    Range: 12
+  Sunder:
+    Name: '&dSunder'
+    Description: ['&7Swaps your health with who you look at.']
+    Trigger: right_click
+    Item: BEACON
+    Cooldown: 30
+    Cancel: true
+    Range: 12
+  Centaur:
+    Name: '&6War stomp'
+    Description: ['&7Massive damage to everyone within 4 blocks - you too.', '&7Whoever survives regenerates.']
+    Trigger: right_click
+    Item: GUNPOWDER
+    Cooldown: 30
+    Cancel: true
+    Damage-Radius: 4
+    Damage: 18
+    Self-Damage: 9
+    Regen-Level: 2
+    Regen-Duration: 5
+  Blinker:
+    Name: '&dBlink'
+    Description: ['&7Your arrow takes you to who it hits, and leaves them a TNT.']
+    Trigger: projectile_hit
+    Projectile: ARROW
+    Cooldown: 25
+    Fuse: 1.5
+  Switcher:
+    Name: '&fSwitch'
+    Description: ['&7Your snowball swaps places with who it hits.']
+    Trigger: projectile_hit
+    Projectile: SNOWBALL
+    Silent: true
+  LaPeace:
+    Name: '&dLa Peace'
+    Description: ['&7Your snowball swaps places with who it hits,', '&7and for 3 seconds neither of you can hit or be hit.']
+    Trigger: projectile_hit
+    Projectile: SNOWBALL
+    Silent: true
+    Peace-Seconds: 3
+  Marriage:
+    Name: '&dLove spell'
+    Description: ['&7Your snowball marries you to who it hits:', '&7the two of you cannot hurt each other.']
+    Trigger: projectile_hit
+    Projectile: SNOWBALL
+    Silent: true
+    Lasts-For: 0          # seconds; 0 = until one of you dies or changes kit
+  Builder:
+    Name: '&eScaffold'
+    Description: ['&7You may place blocks. They vanish after 3 seconds.']
+    Trigger: block_place
+    Cancel: false
+    Silent: true
+    Blocks-Last-For: 3
+    Give-Back: false      # true = the block returns to the builder when it vanishes

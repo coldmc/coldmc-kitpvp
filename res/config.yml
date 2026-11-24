@@ -1,0 +1,219 @@
+# KitPvP - ColdMC's kit PvP. Every rule is here; every message is in lang.yml;
+# every kit is its own file in kits/; abilities are in abilities.yml.
+# /kp admin reload re-reads all of it.
+
+Arenas:
+  # Arena joined by /kp join with no name.
+  Default: Mushroom
+  # Leaving one of these worlds any other way than /kp leave ends the session.
+  # (The 1.8 attack speed, the respawn override and ItemJoin use the same world list
+  #  in CoreTools / ItemJoin - a new arena world must be added there too.)
+
+Leave:
+  # Where /kp leave, the Leave button, logging out, a profile switch and a server stop put a
+  # player: the server spawn, Silverhaven (same as /spawn). 'world, x, y, z, yaw, pitch'.
+  # '' = back to the spot they walked in from.
+  Spawn: 'instance, 10000.5, 77, 0.5, 90, 0'
+
+Join:
+  # Game mode inside KitPvP.
+  Game-Mode: SURVIVAL
+  # Kit given on join and after every death. '' = none: the player gets the hotbar below and
+  # is out of the fight until a kit is chosen.
+  Default-Kit: ''
+  # Items in the hotbar while no kit is worn. Names and lore are in lang.yml (Lobby-Items).
+  # Actions: kits, upgrades, shop, crates, challenges, achievements, stats, leave - or any command.
+  Lobby-Items:
+  # Slot 0 is the first hotbar slot. My kits, Upgrades, Shop and Crates are separate menus with
+  # no tabs between them, so each needs its own item here to be reachable.
+    kits:
+      Slot: 0
+      Item: BOOK
+      Action: kits
+    upgrades:
+      Slot: 1
+      Item: ANVIL
+      Action: upgrades
+    shop:
+      Slot: 2
+      Item: CLOCK
+      Action: shop
+    # Used on a player it asks them for a 1v1 (both click each other and the duel starts);
+    # used on nothing it opens the challenge menu.
+    challenges:
+      Slot: 4
+      Item: STICK
+      Action: challenges
+    # Duel a player, and the PvP / Sumo / Gunfight queues (the owner, 2026-11-14: slot 7, left of the diamond).
+    duels:
+      Slot: 6
+      Item: ITEM_FRAME
+      Action: duels
+    achievements:
+      Slot: 7
+      Item: DIAMOND
+      Action: achievements
+    crates:
+      Slot: 8
+      Item: CHEST
+      Action: crates
+  # Commands a player may still type inside KitPvP (first word, no slash). Admins may type anything.
+  Allowed-Commands: [kitpvp, kp, msg, r, tell, w, helpop, report]
+
+Kits:
+  # once-per-life = one pick per life (and again any time inside the safe zone);
+  # safe-zone = only inside the safe zone; always = any time out of combat.
+  Change: once-per-life
+  # Rows of the kit menu (1-6). The bottom row is navigation.
+  Menu-Rows: 6
+  # Signs inside the shop, to head a section. Page names are in lang.yml (Menus.Kits.Page-Names).
+  # Empty since 2026-11-13: VIP and MVP are whole pages of their own (a kit's Page: 2 / 3).
+  Shop-Labels: {}
+  # Rarities (the owner, 2026-11-13). A kit's rarity comes from the price of tier 1 - the first
+  # Price-Bands value it is at or under picks the rung, above them all is the next rung - or
+  # from a Rarity: line in the kit file. Each upgrade then climbs by its step. The rarity sets
+  # the colour of every kit and tier name (the colour written in the file is replaced) and
+  # the order of the kit, upgrade and shop menus: rarity, then price, then name.
+  # Colours are the MMOItems rarity palette, exact values. Enabled: false = names as written.
+  Rarities:
+    Enabled: true
+    Ladder: ['Basic:&f', 'Uncommon:&a', 'Rare:&#00a9ff', 'Epic:&#aa60ff', 'Legendary:&#ffc038', 'Mythical:&#ff4f63', 'Fabled:&#ac00f0']
+    # 0-400 Basic, 401-600 Uncommon, 601-900 Rare, 901-1400 Epic, 1401-10000 Legendary, 10001+ Mythical
+    Price-Bands: [400, 600, 900, 1400, 10000]
+    # + is one rung up, ++ the same as +, Ultimate one up, the last form one up. Capped at Fabled.
+    Upgrade-Steps: {2: 1, 3: 0, 4: 1, 5: 1}
+
+# Extraction point (the owner, 2026-11-14): stand on this block for Seconds, out of combat, to go back
+# to the spawn and pick a new kit without it counting as a death. Place the blocks in the arena.
+Extraction:
+  Block: END_PORTAL_FRAME
+  Seconds: 5
+
+Combat:
+  # true = inside Kit PvP nobody keeps their MMOCore or MMOItems stats (class, attributes, skill
+  # tree, professions, gear, buffs): everyone fights on the kit alone, with vanilla health, damage
+  # and speed. They are taken off on join and given back on leave, quit or profile switch.
+  Clear-MMO-Stats: true
+  Tag-Seconds: 15
+  # Logging out while tagged counts as a death and a kill for the last attacker.
+  Combat-Log-Punish: true
+  # Seconds of invulnerability after (re)spawning. Attacking ends it.
+  Spawn-Protection-Seconds: 3
+  # Someone who has not picked a kit yet cannot hit or be hit.
+  No-Kit-Protection: true
+  # false = the death screen never shows; the player is healed and put back at the spawn.
+  Death-Screen: false
+  Void-Kills-Instantly: true
+  Fall-Damage: true
+  Hunger: false
+  # With Hunger off, food is held at this level in the arena worlds. Above 20 so a hunger tick
+  # never drops it low enough to eat soup as food instead of drinking it.
+  Food-Level: 22
+  # false = no natural healing from a full food bar in the arena worlds. Soup, kit abilities
+  # and potions still heal.
+  Natural-Regen: false
+  Item-Durability: false
+  Drop-Items: false
+  Pick-Up-Items: false
+  Remove-Arrows-On-Hit: true
+  # Build protection. A kit ability with trigger block_place / block_break and "Cancel: false" may still build.
+  Protect-World: true
+  # A kill counts as "close" when the killer has this many hearts or fewer left.
+  Close-Battle-Hearts: 3.0
+  # A kill counts as "flawless" when the killer is at full health.
+  Effects-On-Respawn: []
+
+Soup:
+  Enabled: true
+  Item: MUSHROOM_STEW
+  Hearts: 3.5
+  # Also restores hunger when Combat.Hunger is on.
+  Food: 6
+  # What the soup turns into. AIR = it disappears.
+  Leaves: BOWL
+  # An emptied bowl can be thrown away even though nothing else can be dropped ...
+  Drop-Bowls: true
+  # ... and is removed as it is thrown, so the arena does not fill with bowls.
+  Dropped-Bowls-Vanish: true
+
+Economy:
+  # false = KitPvP's own coins. true = the server economy through Vault (CoreTools' default
+  # currency, dollar - shown as Coins). Starting-Coins only applies when false.
+  Use-Vault: true
+  Starting-Coins: 1000
+  Kill-Reward: 8
+  Death-Penalty: 0
+  Duel-Win-Reward: 25
+  # Extra coins for the kill that reaches each streak.
+  Streak-Rewards:
+    5: 10
+    10: 25
+    20: 60
+  # Every N kills in a row is announced to everyone in KitPvP.
+  Streak-Announce-Every: 5
+
+# ColdPlayersPlus bots (marked by that plugin). They join, fight, kill and die like players.
+Bots:
+  # true = killing a bot pays and counts exactly like killing a player: coins, streaks and streak
+  # rewards, crate keys, statistics, challenges and achievements. Dying to a bot counts as a death.
+  # The bot itself is never paid and its own records are never saved or shown in the top lists.
+  # false = a fight with a bot on either side changes nothing for either side.
+  Affect-Stats: true
+
+Duels:
+  Enabled: true
+  # The kit a player without one is given when a duel starts (at the tier they own, or tier 1).
+  # Without it a duel from the lobby could never be fought: nobody without a kit can be hit.
+  Kit: Pvp
+  Request-Seconds: 30
+  Countdown-Seconds: 3
+  # PvP duels (arenas without a Kit:): both players start with Duels.Kit and have this long to pick
+  # one of their own kits; whoever doesn't, fights with the starting kit. 0 = keep your kit, plain countdown.
+  Choose-Kit-Seconds: 10
+  # Queues in the duel menu. An arena serves one with Queue: <id> in arenas.yml; a queue with no
+  # enabled arena shows as closed. Names and lore are in lang.yml (Menus.Duels.Queues.<id>).
+  Queues:
+    pvp: {Item: DIAMOND_SWORD}
+    sumo: {Item: SLIME_BALL}
+    gunfight: {Item: BOW}
+
+Storage:
+  Autosave-Minutes: 5
+
+# Shown by /kp stats and usable in tier Requirements. Any other name works too:
+# a script can count anything with  /kp admin stat <player> <stat> add 1 [kit].
+Stats:
+  Shown: [kills, deaths, close_kills, flawless_kills, best_streak, duel_wins, duel_losses, damage_dealt, damage_taken, soups, abilities_used, projectiles_hit, crates_opened, challenges_completed]
+
+# Walking onto one of these blocks throws the player into the air, as on the old PvP server.
+Launch-Pads:
+  Enabled: true
+  Blocks: [SPONGE, WET_SPONGE]
+  Up: 1.5              # the old server's Sponge-Boost-Upwards
+  Forward: 0           # extra push the way the player faces
+  Sound: entity.wither.shoot
+  Volume: 3            # above 1 = heard from further away
+  Pitch: 1
+  No-Fall-Damage-Seconds: 8     # the landing after a launch does not hurt (0 = it does)
+
+# Soup refill stations. Right-clicking one opens a chest of soup to take from.
+# A station is a sign with one of these lines on it, or any block marked with /kp admin station.
+Soup-Stations:
+  Enabled: true
+  Sign-Lines: ['[Soup]', 'Soup']
+  Rows: 3
+  # Starts only when at least one soup was taken.
+  Cooldown-Seconds: 10
+
+# Crates themselves are in crates.yml.
+Crates:
+  Tick-Sound: ui.button.click
+  Win-Sound:
+    coins: entity.experience_orb.pickup
+    new-kit: ui.toast.challenge_complete
+    upgrade: entity.player.levelup
+
+# Achievements are in achievements.yml, challenges in challenges.yml.
+Achievements:
+  # Tell everyone in the arena when someone unlocks one.
+  Broadcast: false

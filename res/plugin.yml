@@ -1,0 +1,28 @@
+name: KitPvP
+version: 1.0.0
+main: se.coldmc.kitpvp.KitPvP
+api-version: '1.21'
+author: Flake
+description: ColdMC's own kit PvP - tiered kits in plain YAML, Nexo items, Skript abilities, an in-game kit creator, duels and detailed statistics.
+softdepend: [Skript, Nexo, MythicLib, MMOCore, MMOItems, MMOProfiles, PlaceholderAPI, Vault, Worlds]
+commands:
+  kitpvp:
+    description: KitPvP.
+    aliases: [kp]
+    usage: /kitpvp help
+permissions:
+  kitpvp.play:
+    description: Join KitPvP and use the player commands.
+    default: op
+  kitpvp.admin:
+    description: The kit creator, arenas and every admin command.
+    default: op
+  kitpvp.premium:
+    description: VIP kits.
+    default: op
+  kitpvp.mvp:
+    description: MVP kits.
+    default: op
+  kitpvp.bypass.cooldown:
+    description: No kit cooldowns.
+    default: op

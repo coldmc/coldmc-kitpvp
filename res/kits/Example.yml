@@ -1,0 +1,44 @@
+# An example kit showing everything a kit file can hold. Disabled, so players never see it.
+Name: '&aExample'
+Enabled: false
+Icon: IRON_SWORD
+# Slot: 12            # menu slot (leave out = next free)      Page: 2
+Permission: ''        # e.g. kitpvp.premium
+Cooldown: 0           # seconds between taking this kit
+Soup-Fill: true       # every empty slot gets soup
+                      # (a slot written as EMPTY stays empty, e.g.  1: EMPTY)
+Description:
+  - '&7A sword, a bow and some armour.'
+Abilities: []         # ids from abilities.yml that every tier has
+Scripts:              # anything, on any event: on-equip, on-kill, on-death, on-hit, on-hurt, on-tick ...
+  on-kill:
+    - 'effect:regeneration:2:4'
+    - 'message:&7The win restores you.'
+Tiers:
+  1:
+    Cost: 0
+    Armor:
+      helmet: IRON_HELMET
+      chestplate: IRON_CHESTPLATE
+      leggings: IRON_LEGGINGS
+      boots: IRON_BOOTS
+    Items:
+      0: DIAMOND_SWORD enchant:sharpness:1
+      1: BOW
+      9: ARROW*32
+  2:
+    Name: '&aExample+'
+    Cost: 750
+    Requirements:
+      - 'kit.kills >= 10 | 10 wins with this kit'
+    Armor:
+      helmet: nexo:mythril_helmet
+      chestplate: IRON_CHESTPLATE enchant:protection:1 armor-model:nexo:mythril
+      leggings: IRON_LEGGINGS
+      boots: IRON_BOOTS
+    Items:
+      0: DIAMOND_SWORD enchant:sharpness:2 model:nexo:sword_iron
+      1: BOW enchant:power:1
+      9: ARROW*64
+    Effects:
+      - speed:1

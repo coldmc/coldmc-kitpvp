@@ -1,0 +1,238 @@
+# kitpvp_abilities.sk - the stock KitPvP abilities. Yours to edit: /sk reload kitpvp_abilities
+#
+# One function per ability: kpability_<id in lowercase>. abilities.yml says when it runs.
+# Parameters are matched by type - take what you need:
+#   player = the wearer, entity = the target, number = tier then damage, location = where.
+# To add your own ability see the top of plugins/KitPvP/abilities.yml.
+
+# Damage that counts as the wearer's (kill credit, combat tag, statistics).
+function kpDamage(victim: entity, amount: number, by: player):
+	{_victim} is not {_by}
+	execute console command "kitpvp admin damage %name of {_by}% %{_amount}% %uuid of {_victim}%"
+
+# Takes a summoned mob out of the world, without drops. (Skript's "delete {_var}" only clears the variable.)
+function kpRemove(e: entity):
+	{_e} is not a player
+	execute console command "kitpvp admin remove %uuid of {_e}%"
+
+# The other fighters within a distance of a place.
+function kpNear(p: player, center: location, radius: number) :: living entities:
+	loop all living entities in radius {_radius} around {_center}:
+		loop-value is not {_p}
+		add loop-value to {_out::*}
+	return {_out::*}
+
+function kpability_kangaroo(p: player):
+	set {_v} to vector from location of {_p} to (location 1 meter in front of {_p})
+	set y component of {_v} to 0
+	set vector length of {_v} to 1.3
+	set y component of {_v} to 0.9
+	set velocity of {_p} to {_v}
+	play sound "entity.firework_rocket.launch" with volume 1 and pitch 1 at {_p}
+
+function kpability_fisherman(p: player, victim: entity):
+	{_victim} is not {_p}
+	teleport {_victim} to {_p}
+
+function kpability_dracula(p: player):
+	set {kp::dracula::%uuid of {_p}%} to now
+	play sound "entity.bat.takeoff" with volume 1 and pitch 0.6 at {_p}
+
+function kpability_dracula_bite(p: player):
+	{kp::dracula::%uuid of {_p}%} is set
+	if difference between {kp::dracula::%uuid of {_p}%} and now < 15 seconds:
+		heal {_p} by 1 heart
+	else:
+		delete {kp::dracula::%uuid of {_p}%}
+
+function kpability_hades(p: player):
+	set {_near::*} to kpNear({_p}, location of {_p}, 20)
+	loop 3 times:
+		spawn wolf at location of {_p}
+		set {_w} to last spawned entity
+		set owner of {_w} to {_p}
+		add {_w} to {_wolves::*}
+		loop {_near::*}:
+			loop-value-2 is a player
+			set target of {_w} to loop-value-2
+			stop loop
+	wait 10 seconds
+	loop {_wolves::*}:
+		kpRemove(loop-value)
+
+function kpability_thor(p: player):
+	set {_b} to location of target block of {_p}
+	{_b} is set
+	strike lightning effect at {_b}
+	loop kpNear({_p}, {_b}, 5):
+		kpDamage(loop-value, 4, {_p})
+
+function kpability_stomper(p: player, tier: number, dmg: number):
+	loop kpNear({_p}, location of {_p}, 5):
+		set {_d} to {_dmg}
+		if loop-value is a player:
+			if loop-value is sneaking:
+				set {_d} to min({_dmg}, 2)
+		kpDamage(loop-value, {_d}, {_p})
+	set metadata value "kitpvp_damage" of {_p} to min({_dmg}, 2)
+
+function kpability_spiderman(p: player):
+	set {_t} to target entity of {_p}
+	if {_t} is set:
+		set {_l} to location of {_t}
+	else:
+		set {_l} to location of block above target block of {_p}
+	{_l} is set
+	block at {_l} is air
+	set block at {_l} to cobweb
+	wait 10 seconds
+	if block at {_l} is cobweb:
+		set block at {_l} to air
+
+function kpability_prisoner(p: player):
+	set {_t} to target entity of {_p}
+	{_t} is set
+	set {_c} to location of {_t}
+	loop blocks in radius 2.6 around {_c}:
+		loop-block is air
+		distance between location of loop-block and {_c} > 1.8
+		set loop-block to glass
+		add location of loop-block to {_cage::*}
+	wait 6 seconds
+	loop {_cage::*}:
+		if block at loop-value is glass:
+			set block at loop-value to air
+
+function kpability_climber(p: player, where: location):
+	set {_v} to vector from location of {_p} to {_where}
+	set vector length of {_v} to 1.8
+	set y component of {_v} to (y component of {_v}) + 0.4
+	set velocity of {_p} to {_v}
+
+function kpability_blinker(p: player, where: location):
+	set {_to} to {_where}
+	set yaw of {_to} to yaw of {_p}
+	set pitch of {_to} to pitch of {_p}
+	teleport {_p} to {_to}
+	play sound "entity.enderman.teleport" with volume 1 and pitch 1 at {_p}
+
+function kpability_dragon(p: player):
+	loop 3 times:
+		set {_c} to location 4 meters in front of {_p}
+		play sound "entity.ender_dragon.growl" with volume 0.6 and pitch 1.4 at {_p}
+		loop kpNear({_p}, {_c}, 5):
+			ignite loop-value-2 for 5 seconds
+			kpDamage(loop-value-2, 4, {_p})
+		wait 1 second
+
+function kpability_suicidal(p: player):
+	create a safe explosion of force 3 at location of {_p}
+	loop kpNear({_p}, location of {_p}, 5):
+		kpDamage(loop-value, 14, {_p})
+	kill {_p}
+
+function kpability_phantom(p: player):
+	allow flight for {_p}
+	set flight mode of {_p} to true
+	wait 5 seconds
+	{_p} is online
+	set flight mode of {_p} to false
+	if gamemode of {_p} is survival:
+		disable flight for {_p}
+
+function kpability_timelord(p: player):
+	loop kpNear({_p}, location of {_p}, 7):
+		apply slowness 10 to loop-value for 10 seconds
+		apply jump boost 200 to loop-value for 10 seconds
+	play sound "block.bell.resonate" with volume 1 and pitch 0.5 at {_p}
+
+function kpability_burrower(p: player):
+	set {_c} to location of {_p}
+	loop blocks in radius 3.5 around {_c}:
+		loop-block is air
+		distance between location of loop-block and {_c} > 2.4
+		set loop-block to bricks
+		add location of loop-block to {_room::*}
+	wait 8 seconds
+	loop {_room::*}:
+		if block at loop-value is bricks:
+			set block at loop-value to air
+
+function kpability_zen(p: player):
+	set {_best} to 61
+	loop all players in world of {_p}:
+		loop-player is not {_p}
+		set {_d} to distance between loop-player and {_p}
+		if {_d} < {_best}:
+			set {_best} to {_d}
+			set {_to} to loop-player
+	{_to} is set
+	teleport {_p} to {_to}
+	play sound "entity.enderman.teleport" with volume 1 and pitch 1.3 at {_p}
+
+function kpability_monk(p: player, victim: entity):
+	{_victim} is a player
+	set {_s} to random integer between 9 and 35
+	set {_held} to tool of {_victim}
+	set {_other} to slot {_s} of inventory of {_victim}
+	set tool of {_victim} to {_other}
+	set slot {_s} of inventory of {_victim} to {_held}
+
+function kpability_hulk(p: player):
+	loop kpNear({_p}, location of {_p}, 5):
+		kpDamage(loop-value, 5, {_p})
+		push loop-value upwards at speed 1
+	play sound "entity.generic.explode" with volume 1 and pitch 0.7 at {_p}
+
+function kpability_rider(p: player):
+	spawn horse at location of {_p}
+	set {_h} to last spawned entity
+	set owner of {_h} to {_p}
+	equip {_h} with saddle
+	make {_p} ride {_h}
+	wait 10 seconds
+	kpRemove({_h})
+
+function kpability_summoner(p: player):
+	spawn iron golem at location of {_p}
+	set {_g} to last spawned entity
+	loop kpNear({_p}, location of {_p}, 20):
+		loop-value is a player
+		set target of {_g} to loop-value
+		stop loop
+	wait 20 seconds
+	kpRemove({_g})
+
+function kpability_souper(p: player):
+	loop 36 times:
+		if slot (loop-number - 1) of inventory of {_p} is air:
+			set slot (loop-number - 1) of inventory of {_p} to mushroom stew
+
+function kpability_bane(p: player):
+	loop kpNear({_p}, location of {_p}, 6):
+		apply blindness 1 to loop-value for 8 seconds
+		apply wither 1 to loop-value for 8 seconds
+
+function kpability_sunder(p: player):
+	set {_t} to target entity of {_p}
+	{_t} is a player
+	set {_mine} to health of {_p}
+	set {_theirs} to health of {_t}
+	set health of {_p} to min({_theirs}, max health of {_p})
+	set health of {_t} to max(min({_mine}, max health of {_t}), 0.5)
+
+function kpability_centaur(p: player):
+	loop kpNear({_p}, location of {_p}, 4):
+		kpDamage(loop-value, 6, {_p})
+	apply regeneration 2 to {_p} for 5 seconds
+
+function kpability_builder(p: player, where: location):
+	wait 3 seconds
+	set block at {_where} to air
+
+function kpability_switcher(p: player, victim: entity):
+	{_victim} is not {_p}
+	set {_a} to location of {_p}
+	set {_b} to location of {_victim}
+	teleport {_p} to {_b}
+	teleport {_victim} to {_a}

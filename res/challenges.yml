@@ -1,0 +1,93 @@
+# KitPvP challenges: a handicap a player takes on by choice, for a reward.
+# One challenge at a time. It counts from the moment it is taken on, and can be done once per
+# day, week or month (Period: daily | weekly | monthly | once).
+#
+# Modifiers - the handicaps. Any mix of:
+#   Max-Health: 0.5        half the hearts
+#   Hotbar-Slots: 5        only the first 5 hotbar slots can be used
+#   Effects: [slowness:1]  potion effects for as long as the kit is worn (level is 1-based)
+#   Damage-Dealt: 0.75     hits do less
+#   Damage-Taken: 1.5      hits hurt more
+#   No-Soup: true          soup does not heal
+Modifiers:
+  half-hotbar:
+    Name: '&eHalf hotbar'
+    Description: ['&7Only half of your hotbar can be used.']
+    Hotbar-Slots: 5
+  half-health:
+    Name: '&cHalf health'
+    Description: ['&7You have half your hearts.']
+    Max-Health: 0.5
+  slowness:
+    Name: '&9Slowness'
+    Description: ['&7You are slowed.']
+    Effects: ['slowness:1']
+  no-soup:
+    Name: '&6No soup'
+    Description: ['&7Soup does not heal you.']
+    No-Soup: true
+  glass-cannon:
+    Name: '&dGlass cannon'
+    Description: ['&7Every hit hurts you half again as much.']
+    Damage-Taken: 1.5
+
+# How many of each period are on offer at a time (0 = all of them). The pick changes with the
+# day, week or month and is the same for everyone.
+Rotation:
+  daily: 3
+  weekly: 0
+  monthly: 0
+
+# Goal: '<statistic> >= <amount>', counted from when the challenge was taken on. Statistics:
+#   kills close_kills flawless_kills duel_wins damage_dealt soups abilities_used projectiles_hit
+# Rewards: coins:<n>   keys:<Crate>:<n>   kit:<Kit>   console:<command with %player%>   message:<text>
+Challenges:
+  daily-half-hotbar:
+    Name: '&eLight pack'
+    Icon: CHEST_MINECART
+    Period: daily
+    Modifiers: [half-hotbar]
+    Goal: 'kills >= 5'
+    Rewards: ['coins:100']
+  daily-half-health:
+    Name: '&cThin skin'
+    Icon: REDSTONE
+    Period: daily
+    Modifiers: [half-health]
+    Goal: 'kills >= 3'
+    Rewards: ['coins:150']
+  daily-slowness:
+    Name: '&9Heavy boots'
+    Icon: IRON_BOOTS
+    Period: daily
+    Modifiers: [slowness]
+    Goal: 'kills >= 5'
+    Rewards: ['coins:100']
+  daily-no-soup:
+    Name: '&6Empty bowl'
+    Icon: BOWL
+    Period: daily
+    Modifiers: [no-soup]
+    Goal: 'kills >= 3'
+    Rewards: ['coins:150']
+  daily-glass-cannon:
+    Name: '&dGlass cannon'
+    Icon: GLASS
+    Period: daily
+    Modifiers: [glass-cannon]
+    Goal: 'kills >= 5'
+    Rewards: ['coins:100']
+  weekly-half-health:
+    Name: '&cOn the edge'
+    Icon: TOTEM_OF_UNDYING
+    Period: weekly
+    Modifiers: [half-health]
+    Goal: 'kills >= 25'
+    Rewards: ['coins:500', 'keys:Kit:1']
+  monthly-everything:
+    Name: '&4The long way'
+    Icon: NETHER_STAR
+    Period: monthly
+    Modifiers: [half-hotbar, half-health, slowness]
+    Goal: 'kills >= 50'
+    Rewards: ['coins:2500', 'keys:Kit:5']

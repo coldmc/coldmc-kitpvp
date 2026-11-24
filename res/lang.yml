@@ -1,0 +1,591 @@
+# KitPvP - every text the plugin shows. & colour codes and &#RRGGBB work everywhere.
+# A line that starts with ! is sent without the Prefix. A list is sent line by line, without it.
+# An empty text ('') sends nothing. %placeholders% are filled in by the plugin.
+Prefix: '&8[&dɢᴀɪᴀ&8] &7'
+
+General:
+  Unknown-Command: 'The command was not recognized.'
+  No-Permission: 'That is not yours to do.'
+  Players-Only: 'Only a player can do that.'
+  Not-In-Game: 'You are not in the arena. &f/kp join'
+  Player-Not-Found: 'Nobody called &f%player%&7 is known here.'
+  Command-Not-Here: 'Not in the arena. &f/kp leave&7 first.'
+
+Join:
+  Joined: 'You step into &f%arena%&7. Your belongings are kept safe until you leave.'
+  Already: 'You are already in the arena.'
+  No-Arena: 'There is no such arena.'
+  No-Spawn: 'The arena &f%arena%&7 has no place to stand yet.'
+
+Leave:
+  Left: 'You leave the arena. Everything you carried is back with you.'
+  Recovered: 'The arena closed while you were inside. Your belongings are back with you.'
+
+Spawn:
+  Teleported: 'Back at the start.'
+# The extraction point: stand on it out of combat to go back to the spawn without dying.
+Extraction:
+  Countdown: '&bExtracting&7... &f%seconds%s &7- stay on the block'
+  In-Combat: '&cYou are in a fight &7- extraction waits until it is over'
+  Done: 'Extracted. Pick a new kit.'
+
+Lobby-Items:
+  kits:
+    Name: '&d&lKits &7(right-click)'
+    Lore:
+      - '&7Choose what you fight with.'
+  upgrades:
+    Name: '&e&lUpgrades &7(right-click)'
+    Lore:
+      - '&7Make the kits you own stronger.'
+  shop:
+    Name: '&a&lShop &7(right-click)'
+    Lore:
+      - '&7Buy kits you do not own yet.'
+  crates:
+    Name: '&6&lCrates &7(right-click)'
+    Lore:
+      - '&7Open what your keys have earned.'
+  challenges:
+    Name: '&c&lChallenges &7(right-click)'
+    Lore:
+      - '&7Make your battles harder with challenges.'
+      - '&7Receive rewards.'
+  achievements:
+    Name: '&b&lAchievements &7(right-click)'
+    Lore:
+      - '&7One-time rewards for what you have done.'
+  duels:
+    Name: '&9&lDuels &7(right-click)'
+    Lore:
+      - '&7Challenge a player, or queue for'
+      - '&7a PvP, Sumo or Gunfight duel.'
+  leave:
+    Name: '&c&lLeave &7(right-click)'
+    Lore:
+      - '&7Back to the world, with your own things.'
+
+Kits:
+  Equipped: 'You take up &f%kit%&7.'
+  Not-Found: 'There is no such kit.'
+  Not-Owned: 'You do not own &f%kit%&7 yet.'
+  No-Permission: '&f%kit%&7 belongs to those of higher rank.'
+  Not-Now: 'Not during a duel.'
+  Once-Per-Life: 'One kit per life. Return to the start to choose again.'
+  Only-In-Safe-Zone: 'You can only change kit at the start.'
+  Cooldown: 'That kit is ready again in &f%seconds%s&7.'
+  Bought: 'You bought &f%kit%&7 for &6%cost% coins&7.'
+  Upgraded: 'Upgraded to &f%kit% &8(&7tier %tier%&8)&7 for &6%cost% coins&7.'
+  No-Money: 'That costs &6%cost% coins&7. You have &6%coins%&7.'
+  Max-Tier: 'That kit is as strong as it gets.'
+  Confirm-Word: 'confirm'      # /kp buy <kit> confirm
+  Requirement-Missing: 'Not yet: &f%requirement% &8(&7%progress%&8)'
+
+Requirements:
+  Stat: '%stat% %op% %value%'
+  Permission: 'A higher rank'
+
+Combat:
+  Tagged: '&cYou are in a fight. Leaving now counts as a death.'
+  Untagged: '&aThe fight is over.'
+  Action-Bar: '&c⚔ In a fight: &f%seconds%s'
+  Command-Blocked: 'Not while you are fighting.'
+  Safezone-Deny: 'No fighting at the start.'
+  Protected: 'They have only just arrived.'
+  Kill: 'You defeated &f%victim%&7. &6+%reward% coins &8(&7streak %streak%&8)'
+  Kill-Close: 'You defeated &f%victim%&7 with &c%hearts%♥&7 left - a close one. &6+%reward% coins &8(&7streak %streak%&8)'
+  Death: '&f%attacker%&7 defeated you with &c%hearts%♥&7 left.'
+  Death-Alone: 'You fell.'
+  Streak-Broadcast: '&f%player%&7 has won &f%streak%&7 fights in a row.'
+  Combat-Log: '&f%victim%&7 fled from &f%attacker%&7 and lost the fight.'
+
+Ability:
+  Cooldown: '&7%ability% &8- &f%seconds%s'
+  Peace: '&d☮ Peace for %seconds%s &7- you cannot hit or be hit'
+  Married: '&d❤ &7You and &f%player%&7 can no longer hurt each other.'
+
+Duel:
+  Usage: 'Challenge someone with &f/kp duel <player>&7.'
+  Disabled: 'Duels are closed.'
+  Not-Available: '&f%player%&7 is not in the arena.'
+  Busy: 'One of you is already busy.'
+  Sent: 'You challenged &f%player%&7.'
+  Received: '&f%player%&7 challenges you to a duel. &f/kp accept &8(&7%seconds%s&8)'
+  No-Request: 'Nobody is challenging you.'
+  No-Arena: 'Every duel ground is taken. Try again in a moment.'
+  Start: 'Duel against &f%player%&7 in &f%arena%&7. It begins in &f%seconds%s&7.'
+  Countdown: '&eThe duel begins in &f%seconds%s'
+  Choose-Kit: 'Pick your kit now: you have &f%seconds%s&7. If you don''t, you fight with the starting kit.'
+  Choose-Countdown: '&ePick your kit &8- &7the duel begins in &f%seconds%s'
+  Won: 'You won the duel against &f%player%&7. &6+%reward% coins'
+  Lost: '&f%player%&7 won the duel.'
+Queue:
+  Joined: 'You are in the &f%queue%&7 queue &8(%waiting% waiting)&7. Click it again to leave.'
+  Left: 'You left the &f%queue%&7 queue.'
+  No-Arena: 'The &f%queue%&7 queue has no arena open right now.'
+
+Economy:
+  Balance: 'You have &6%coins% coins&7.'
+  Balance-Other: '&f%player%&7 has &6%coins% coins&7.'
+
+Stats:
+  Header: '!&8&m      &r &d%player% &8&m      '
+  Kit-Header: '!&8&m      &r &d%player% &7with &f%kit% &8&m      '
+  Line: '!&7%stat%: &f%value%'
+  Best-Kit: '!&7Most wins with: &f%kit% &8(&7%kills%&8)'
+  Footer: ''
+  Tier: 'Tier'
+  With-This-Kit: ' with this kit'
+  With-Kit: ' with %kit%'
+  Names:
+    kills: 'Wins'
+    deaths: 'Deaths'
+    kd: 'Wins per death'
+    streak: 'Current streak'
+    best_streak: 'Best streak'
+    close_kills: 'Close wins'
+    flawless_kills: 'Untouched wins'
+    duel_wins: 'Duels won'
+    duel_losses: 'Duels lost'
+    damage_dealt: 'Damage dealt'
+    damage_taken: 'Damage taken'
+    soups: 'Soups eaten'
+    uses: 'Times chosen'
+    coins: 'Coins'
+    abilities_used: 'Abilities used'
+    projectiles_hit: 'Shots landed'
+    crates_opened: 'Crates opened'
+    challenges_completed: 'Challenges completed'
+    streaks_earned: 'Win streaks'
+    soups_refilled: 'Soups taken from stations'
+
+Top:
+  Header: '!&8&m      &r &dTop 10 &7- &f%stat% &8&m      '
+  Line: '!&e#%rank% &f%player% &8- &a%value%'
+  Empty: '!&7Nothing recorded yet.'
+  Footer: ''
+
+Help:
+  Player:
+    - '&8&m      &r &dKitPvP &8&m      '
+    - '&f/kp join [arena] &8- &7enter the arena'
+    - '&f/kp leave &8- &7leave, with your own things'
+    - '&f/kp kit [name] &8- &7the kit menu, or take a kit'
+    - '&f/kp upgrade <kit> &8- &7see and buy the next tier'
+    - '&f/kp buy <kit> confirm &8- &7buy the next tier straight away'
+    - '&f/kp shop &8/ &f/kp upgrades &8- &7buy kits, upgrade kits'
+    - '&f/kp crates &8- &7open crates with your keys'
+    - '&f/kp challenges &8/ &f/kp achievements'
+    - '&f/kp spawn &8- &7back to the start'
+    - '&f/kp duel <player> &8/ &f/kp accept &8- &71v1'
+    - '&f/kp stats [player] [kit] &8- &7statistics'
+    - '&f/kp top [stat] [kit] &8- &7the best ten'
+    - '&f/kp balance &8- &7your coins'
+  Admin-Hint: '!&c/kp admin help &8- &7admin commands'
+  Admin:
+    - '&8&m      &r &cKitPvP admin &8&m      '
+    - '&f/kp admin kiteditor &8- &7create and edit kits in a menu'
+    - '&f/kp admin itemeditor &8- &7customize the item in your hand'
+    - '&f/kp admin item <name|addlore|clearlore|enchant|model|ability|unbreakable|text> &8- &7the same, typed'
+    - '&f/kp admin arena <list|create|addspawn|clearspawns|saferadius|enable|disable|remove|tp>'
+    - '&f/kp admin reload &8- &7re-read config, lang, abilities, arenas and kits'
+    - '&f/kp admin join|leave <player> [arena]'
+    - '&f/kp admin setkit <player> <kit> [tier] &8- &7put a kit on someone'
+    - '&f/kp admin settier <player> <kit> <tier> &8- &7what they own'
+    - '&f/kp admin coins <player> <set|add|remove> <n>'
+    - '&f/kp admin use <player> <ability> [target] &8- &7run an ability now'
+    - '&f/kp admin keys <player> <set|add|remove> <n> [crate]'
+    - '&f/kp admin station &8- &7make the block you look at a soup station (or undo it)'
+    - '&f/kp admin stat <player> <stat> <set|add|remove> <n> [kit]'
+    - '&f/kp admin kill <victim> [killer] &8- &7a KitPvP death, credited to the killer'
+    - '&f/kp admin reset <player> &8- &7wipe their record (kept in players-removed)'
+    - '&f/kp admin ability <id> <trigger> [cooldown] [item|-] [function] &8- &7register an ability'
+    - '&f/kp admin give <player> <item text> &8- &7test an item line'
+
+Admin:
+  Done: 'Done.'
+  Usage: 'Usage: &f%usage%'
+  Reloaded: 'Reloaded: &f%kits%&7 kits, &f%arenas%&7 arenas, &f%abilities%&7 abilities.'
+  No-Such-Tier: '&f%kit%&7 has no tier &f%tier%&7.'
+  Tier-Set: '&f%player%&7 now owns &f%kit%&7 at tier &f%tier%&7.'
+  Coins-Set: '&f%player%&7 now has &6%coins% coins&7.'
+  Stat-Set: '&f%player%&7: %stat% = &f%value%&7.'
+  Reset: 'The record of &f%player%&7 is wiped.'
+  Keys-Set: '&f%player%&7 now has &f%keys%&7 keys for %crate%&7.'
+  Ability-Registered: 'Ability &f%ability%&7 registered on &f%trigger%&7.'
+
+Arena:
+  Not-Found: 'There is no such arena.'
+  List-Header: '!&8&m      &r &dArenas &8&m      '
+  List-Line: '!&f%arena% &8- &7%type%, %spawns% spawns, safe radius %radius%, enabled: %enabled%'
+  Created: 'Arena &f%arena%&7 (%type%) created where you stand.'
+  Spawn-Added: 'Spawn %spawns% added to &f%arena%&7.'
+  Spawns-Cleared: 'Spawns of &f%arena%&7 cleared.'
+  Radius-Set: 'Safe radius of &f%arena%&7 is now &f%radius%&7.'
+  Removed: 'Arena &f%arena%&7 removed.'
+
+Editor:
+  Cancel-Word: 'cancel'
+  None: 'none'
+  Auto: 'auto'
+  Cancelled: 'Cancelled.'
+  Hold-Item: 'Hold an item in your hand first.'
+  Not-A-Number: 'That is not a number.'
+  Bad-Model: 'That is not a model id. Example: &fnexo:sword_katana'
+  Unknown-Effect: 'Unknown effect &f%effect%&7. Example: &fspeed:1'
+  Unknown-Enchant: 'Unknown enchantment. Example: &fsharpness'
+  Unknown-Ability: 'There is no ability &f%ability%&7 in abilities.yml.'
+  Kit-Created: 'Kit &f%kit%&7 created.'
+  Kit-Exists: 'A kit &f%kit%&7 already exists.'
+  Kit-Removed: 'Kit &f%kit%&7 removed. Its file is kept in kits-removed.'
+  Tier-Removed: 'Tier %tier% of &f%kit%&7 removed.'
+  Items-Saved: 'Saved &f%count%&7 items to &f%kit%&7 tier %tier%.'
+  Item-Updated: 'Item updated.'
+  Item-Given: 'Here is &f%item%&7.'
+  No-Such-Item: 'There is no item &f%item%&7.'
+  Item-Text: 'In a kit file this item is: &f%text%'
+  Prompt:
+    Kit-Id: 'Type the id of the new kit (one word, like &fTank&7), or &ccancel&7:'
+    Name: 'Type the display name (& colours work), or &ccancel&7:'
+    Cooldown: 'Type the cooldown in seconds (0 = none), or &ccancel&7:'
+    Permission: 'Type the permission a player needs (or &fnone&7), or &ccancel&7:'
+    Slot: 'Type the menu slot 0-44 and optionally the page (&f12 2&7), or &fauto&7, or &ccancel&7:'
+    Description: 'Type one description line (& colours work), or &ccancel&7:'
+    Cost: 'Type what tier %tier% costs, or &ccancel&7:'
+    Tier-Name: 'Type what this tier is called (or &fnone&7 to use the kit name), or &ccancel&7:'
+    Effects: 'Type the effects, comma separated, like &fspeed:2, resistance:1&7 (Speed II, Resistance I) (or &fnone&7), or &ccancel&7:'
+    Requirement: 'Type a requirement, like &fkit.kills >= 25 | 25 wins with this kit&7, or &ccancel&7:'
+    Item-Name: 'Type the item name (& colours work), or &ccancel&7:'
+    Item-Lore: 'Type one lore line (& colours work), or &ccancel&7:'
+    Item-Durability: 'Type the durability left, 1-%max%, or &ccancel&7:'
+    Item-Model: 'Type the model, like &fnexo:sword_katana&7 (the item keeps its own stats), or &ccancel&7:'
+    Item-Armor-Model: 'Type the worn armour set, like &fnexo:iridium&7, or &ccancel&7:'
+    Custom-Item: 'Type the item, like &fnexo:iridium_sword&7 or &fmmoitems:SWORD:CUTLASS&7, or &ccancel&7:'
+
+Menus:
+  Previous: {Name: '&e← Previous page', Lore: []}
+  Next: {Name: '&eNext page →', Lore: []}
+  Back: {Name: '&c← Back', Lore: []}
+  Close: {Name: '&cClose', Lore: []}
+  Balance:
+    Name: '&6%coins% coins'
+    Lore:
+      - '&7Wins: &f%kills%  &7Deaths: &f%deaths%  &7Ratio: &f%kd%'
+  Kits:
+    Title-kits: '&8Your kits &7- page %page%'
+    Title-upgrades: '&8Upgrades &7- page %page%'
+    Title-shop: '&8Shop &7- %pagename%'
+    Title-all: '&8All kits &7- %pagename%'
+    Page-Default: 'page %page%'
+    # A name for a shop page instead of "page N".
+    Page-Names:
+      '1': 'Kits'
+      '2': 'VIP'
+      '3': 'MVP'
+  Tab-kits: {Name: '&d&lYour kits', Lore: ['&7Take a kit you own.']}
+  Tab-upgrades: {Name: '&e&lUpgrades', Lore: ['&7The next tier of the kits you own.']}
+  Tab-shop: {Name: '&a&lShop', Lore: ['&7Kits you do not own yet.']}
+  Tab-crates: {Name: '&6&lCrates', Lore: ['&7Open what your keys have earned.']}
+  Empty-kits: {Name: '&cYou own no kit yet', Lore: ['&7Look in the shop.']}
+  Empty-upgrades: {Name: '&7Nothing to upgrade', Lore: ['&7Every kit you own is at its highest tier.']}
+  Empty-shop: {Name: '&7You own every kit', Lore: []}
+  Empty-all: {Name: '&7No kits', Lore: []}
+  Crates:
+    Title: '&8Crates'
+    Roll-Title: '&8%crate%'
+    Many-Title: '&8%crate% &7x%amount%'
+    Swap-Key: 'F'
+    Entry-Lore:
+      - ''
+      - '&7Keys: &e%keys%'
+      - '&8One key for every %every% wins, and for win streaks.'
+      - ''
+      - '&a▸ Click &7to open one'
+      - '&e▸ Press %swap% &7(off-hand key) to open %multi% at once'
+      - '&8Close the menu to skip the roll.'
+    Marker: {Name: '&e▼', Lore: []}
+  Challenges:
+    Title: '&8Challenges'
+    Entry-Lore:
+      - ''
+      - '&7%period%  &8-  &7Goal: &f%goal% %stat%'
+    Modifier-Line: '&c✦ &f%modifier%'
+    Reward-Line: '&6★ &7%reward%'
+    State-Open:
+      - ''
+      - '&a▸ Click &7to take it on'
+    State-Active:
+      - ''
+      - '&eTaken on: &f%progress%&7/&f%goal%'
+      - '&c▸ Click &7to drop it (progress is lost)'
+    State-Done:
+      - ''
+      - '&a✔ Done. It comes back next time.'
+  Achievements-Button: {Name: '&b&lAchievements', Lore: ['&7One-time rewards for what you have done.']}
+  Achievements:
+    Title: '&8Achievements &7- page %page%'
+    Unlocked:
+      - ''
+      - '&a✔ Unlocked'
+    Locked:
+      - ''
+      - '&c✘ &7%progress%&8/&7%goal%'
+  Soup-Station:
+    Title: '&8Soup'
+  Kit:
+    Rarity:
+      - '%rarity%'
+    Already-Bought:
+      Name: '&7Already bought'
+      Lore: ['&8%kit%']
+    Owned:
+      - ''
+      - '&7Tier: &e%tier%&7/&e%max%'
+    Not-Owned:
+      - ''
+      - '&cNot owned'
+    Locked:
+      - '&cNeeds a higher rank'
+    Price:
+      - '&7Price: &6%cost% coins'
+    Next-Tier:
+      - '&7Next: &f%name% &8- &6%cost% coins'
+    Max-Tier:
+      - '&8Highest tier reached'
+    Requirement-Met: '&a✔ &7%requirement%'
+    Requirement-Missing: '&c✘ &7%requirement% &8(&7%progress%&8)'
+    Stats:
+      - ''
+      - '&8Your record with this kit'
+      - '&7Wins &f%kills%  &7Deaths &f%deaths%  &7Close wins &f%close%'
+      - '&7Best streak &f%streak%  &7Chosen &f%uses%&7 times'
+    Click-Owned:
+      - ''
+      - '&a▸ Left-click &7to take it'
+      - '&e▸ Right-click &7to see the next tier'
+    Click-Max:
+      - ''
+      - '&a▸ Left-click &7to take it'
+    Click-Buy:
+      - ''
+      - '&e▸ Click &7to see and buy it'
+  Upgrade:
+    Title: '&8%kit% &7- tier %tier%'
+    Info:
+      Name: '&e%kit%'
+      Lore:
+        - '&7Cost: &6%cost% coins'
+        - '&7You have: &6%coins% coins'
+        - ''
+    Effect-Line: '&7Effect: &f%effect%'
+    Ability-Line: '&7Ability: &f%ability%'
+    Soup-Line: '&7Empty slots are filled with soup'
+    Buy: {Name: '&a&lBuy', Lore: ['&7For &6%cost% coins']}
+    Confirm: {Name: '&a&lUpgrade', Lore: ['&7For &6%cost% coins']}
+    Max: {Name: '&8Highest tier reached', Lore: []}
+    Owned: {Name: '&aYou already have this', Lore: []}
+    Need-Previous: {Name: '&cGet tier %tier% first', Lore: ['&7Upgrades are bought in order.']}
+    Previous-Upgrade: {Name: '&e← Previous upgrade', Lore: ['&7Up to tier %tier%']}
+    Next-Upgrade: {Name: '&eNext upgrade →', Lore: ['&7Up to tier %tier%']}
+  Duels:
+    Title: '&8Duels'
+    Players-Title: '&8Duel a player &7- page %page%'
+    Player: {Name: '&b&lDuel a player', Lore: ['&7Pick someone in Kit PvP to challenge.']}
+    Player-Name: '&f%player%'
+    Player-Challenge: ['&7Click to challenge &f%player%&7.']
+    Player-Accept: ['&a%player% challenged you!', '&aClick to accept.']
+    Player-Busy: ['&8%player% is in a duel.']
+    Nobody: {Name: '&7Nobody else is here', Lore: []}
+    Queue-Join: ['', '&7Waiting: &f%waiting%', '&aClick to join the queue.']
+    Queue-In: ['', '&7Waiting: &f%waiting%', '&eYou are in this queue.', '&cClick to leave it.']
+    Queue-Closed: ['', '&cNo arena is open for this queue.']
+    Queues:
+      pvp: {Name: '&c&lPvP Duel', Lore: ['&7A 1v1 with your own kit.']}
+      sumo: {Name: '&e&lSumo', Lore: ['&7No kit and no damage.', '&7Push them into the water to win.']}
+      gunfight: {Name: '&6&lGunfight', Lore: ['&7Red against Blue: a strong bow,', '&7a one-hit sword and five arrows.']}
+  # The buy and upgrade previews (row 6: Cancel, the price book, Buy/Upgrade or Locked).
+  Preview:
+    Next: {Name: '&e➜', Lore: []}
+    Cancel: {Name: '&c&lCancel', Lore: ['&7Back to the kits.']}
+    Locked: {Name: '&c&lLocked: %rank%', Lore: ['&7You can look, but this kit', '&7needs the &f%rank%&7 rank.']}
+    Price: {Name: '&ePrice: &6%cost%', Lore: ['&7You have: %have_color%%coins%']}
+    None: {Name: '&7No %part%', Lore: []}
+    No-Special: {Name: '&7No special item', Lore: ['&7This kit fights with its weapon and armour.']}
+    Ability-Icon: {Name: '&6Ability: &f%ability%'}
+    Ability-Line: '&6Ability: &f%ability%'
+    Also-Line: '&7Also: &f%amount%x %item%'
+    Effects: {Name: '&dPotion effects'}
+    Effect-One: '&d%effect%'
+    Effect-Line: '&7▪ &f%effect%'
+    No-Effects: {Name: '&7No potion effects', Lore: []}
+    Potions: {Name: '&dPotions'}
+    Potion-Line: '&7▪ &f%amount%x %potion%'
+    Parts: {weapon: weapon, special: special item, extra: extra items, effects: potion effects, helmet: helmet, chestplate: chestplate, leggings: leggings, boots: boots}
+    # The rank a kit's Permission needs, keyed on the text after its last dot.
+    Ranks: {premium: VIP, mvp: MVP}
+  Editor:
+    List-Title: '&8Kit creator &7- page %page%'
+    Kit-Title: '&8Kit: %kit%'
+    Tiers-Title: '&8Tiers: %kit%'
+    Tier-Title: '&8%kit% - tier %tier%'
+    Items-Title: '&8Items: %kit% tier %tier%'
+    Abilities-Title: '&8Abilities &7- page %page%'
+    Kit-Entry:
+      Lore:
+        - '&7Id: &f%id%'
+        - '&7Tiers: &e%tiers%  &7Enabled: &f%enabled%'
+        - ''
+        - '&a▸ Click &7to edit'
+        - '&c▸ Drop (Q) &7to remove'
+    Create: {Name: '&a&l+ New kit', Lore: ['&7Type its id in chat.']}
+    Icon:
+      Name: '&eMenu icon'
+      Lore:
+        - '&7Hold the item you want as the icon'
+        - '&7(Nexo items work) and click.'
+    Name: {Name: '&eDisplay name', Lore: ['&7Now: &r%name%', '', '&a▸ Click &7to type a new one']}
+    Cooldown: {Name: '&eCooldown', Lore: ['&7Now: &f%cooldown%s', '', '&a▸ Click &7to change']}
+    Permission:
+      Name: '&ePermission and menu slot'
+      Lore:
+        - '&7Permission: &f%permission%'
+        - '&7Slot: &f%slot% &7page &f%page%'
+        - ''
+        - '&a▸ Left-click &7permission'
+        - '&e▸ Right-click &7menu slot'
+    Soup-On: {Name: '&aSoup fill: ON', Lore: ['&7Every empty slot gets soup', '&7when the kit is taken.', '', '&e▸ Click &7to turn off']}
+    Soup-Off: {Name: '&cSoup fill: OFF', Lore: ['&7The kit gets only its own items.', '', '&e▸ Click &7to turn on']}
+    Enabled-On: {Name: '&aEnabled', Lore: ['&7Players can see and take this kit.', '', '&e▸ Click &7to disable']}
+    Enabled-Off: {Name: '&cDisabled', Lore: ['&7Hidden from players.', '', '&e▸ Click &7to enable']}
+    Description:
+      Name: '&eDescription'
+      Lore:
+        - ''
+        - '&a▸ Left-click &7to add a line'
+        - '&c▸ Right-click &7to clear'
+    Tiers: {Name: '&6&lTiers and items', Lore: ['&7Tiers: &e%tiers%', '&7Items, armour, cost, effects', '&7and requirements of each tier.']}
+    Abilities: {Name: '&dAbilities', Lore: ['&7Now: &f%abilities%', '', '&a▸ Click &7to choose']}
+    Scripts:
+      Name: '&bAttached scripts'
+      Line: '&8%trigger%: &f%action%'
+      Lore:
+        - ''
+        - '&7Any Skript function or command can be'
+        - '&7attached to any event of this kit.'
+        - '&7Edit &f%file%'
+        - '&7Scripts: on-kill: [skript:myFunction]'
+    Tier-Entry:
+      Name: '&e&lTier %tier% &8- &r%name%'
+      Lore:
+        - '&7Cost: &6%cost%'
+        - '&7Items: &f%items%  &7Requirements: &f%requirements%'
+        - ''
+        - '&a▸ Click &7to edit'
+    Add-Tier: {Name: '&a&l+ Add tier %tier%', Lore: ['&7Starts as a copy of the last tier.']}
+    Tier-Items: {Name: '&6Items and armour', Lore: ['&7Items: &f%items%', '', '&a▸ Click &7to open the chest']}
+    Tier-Cost: {Name: '&eCost', Lore: ['&7Now: &6%cost%', '', '&a▸ Click &7to change']}
+    Tier-Name: {Name: '&eTier name', Lore: ['&7Now: &r%name%', '', '&a▸ Click &7to change']}
+    Tier-Effects: {Name: '&ePotion effects', Lore: ['&7Now: &f%effects%', '', '&a▸ Click &7to change']}
+    Tier-Requirements:
+      Name: '&eRequirements'
+      Line: '&8- &f%requirement%'
+      Lore:
+        - ''
+        - '&7What a player needs before buying this tier.'
+        - '&7kills >= 100   kit.close_kills >= 5   tier:Tank >= 3'
+        - '&a▸ Left-click &7to add one'
+        - '&c▸ Right-click &7to clear'
+    Tier-Delete: {Name: '&cRemove tier %tier%', Lore: ['&c▸ Drop (Q) &7to remove']}
+    Slot-Helmet: {Name: '&f↑ Helmet', Lore: []}
+    Slot-Chestplate: {Name: '&f↑ Chestplate', Lore: []}
+    Slot-Leggings: {Name: '&f↑ Leggings', Lore: []}
+    Slot-Boots: {Name: '&f↑ Boots', Lore: []}
+    Slot-Offhand: {Name: '&f↑ Offhand', Lore: []}
+    Items-Cancel: {Name: '&c&lCancel', Lore: ['&7Nothing is saved.']}
+    Items-Tip:
+      Name: '&eHow this chest works'
+      Lore:
+        - '&7Top row = hotbar. Rows 2-4 = inventory.'
+        - '&7Row 5 = helmet, chestplate, leggings,'
+        - '&7boots, offhand.'
+        - '&7Customize items first with'
+        - '&f/kp admin itemeditor&7. Nexo items work.'
+        - '&7Leave soup out: Soup fill adds it.'
+        - '&ePress Q on an empty pane &7for an ability item.'
+    Empty-Slot: {Name: '&8Empty slot', Lore: ['&7Put an item here,', '&e▸ Drop (Q) &7for a premade ability item']}
+    Slot-Abilities-Title: '&8Pick an ability &7- page %page%'
+    Slot-Ability:
+      Lore:
+        - '&8%id% - %trigger% - %cooldown%s'
+        - '&a▸ Click &7to put it in the slot'
+    Items-Save: {Name: '&a&lSave', Lore: ['&7Saves this layout to tier %tier%.']}
+    Ability-Entry:
+      Lore-On:
+        - '&8%id% - %trigger% - %cooldown%s'
+        - '&a✔ Chosen &7- click to remove'
+      Lore-Off:
+        - '&8%id% - %trigger% - %cooldown%s'
+        - '&7Click to choose'
+  Item:
+    Title: '&8Item customizer'
+    Enchants-Title: '&8Enchantments &7- page %page%'
+    Rename: {Name: '&e&lName', Lore: ['&7Now: &r%name%', '', '&a▸ Left-click &7to type', '&c▸ Right-click &7to reset']}
+    Lore: {Name: '&e&lLore', Lore: ['&7Lines: &f%lines%', '', '&a▸ Left-click &7add a line', '&e▸ Shift-click &7remove the last', '&c▸ Right-click &7clear']}
+    Enchants: {Name: '&d&lEnchantments', Lore: ['&a▸ Click &7to browse']}
+    Model: {Name: '&b&lNexo model', Lore: ['&7Now: &f%model%', '&7The item looks like the model', '&7and keeps its own stats.', '', '&a▸ Left-click &7to type', '&c▸ Right-click &7to clear']}
+    Armor-Model: {Name: '&b&lWorn armour model', Lore: ['&7Now: &f%model%', '&7What the armour looks like', '&7on the body.', '', '&a▸ Left-click &7to type', '&c▸ Right-click &7to clear']}
+    Ability: {Name: '&d&lBound ability', Lore: ['&7Now: &f%ability%', '&7The ability travels with this item.', '', '&a▸ Click &7to choose']}
+    Unbreakable-On: {Name: '&a&lUnbreakable: ON', Lore: ['&e▸ Click &7to turn off']}
+    Unbreakable-Off: {Name: '&c&lUnbreakable: OFF', Lore: ['&e▸ Click &7to turn on']}
+    Duplicate: {Name: '&6&lDuplicate', Lore: ['&7Gives you a copy.']}
+    Durability: {Name: '&e&lDurability', Lore: ['&7Now: &f%left%&7/&f%max%', '', '&a▸ Click &7to type']}
+    Get-Custom: {Name: '&b&lGet a Nexo or MMOItems item', Lore: ['&7Type its id in chat.']}
+    Enchant-Entry: {Name: '&b%enchant%', Lore: ['&7Level: &e%level%', '', '&a▸ Left-click &7+1', '&e▸ Shift-click &7+5', '&c▸ Right-click &7remove']}
+
+Crates:
+  No-Keys: 'You have no key for %crate%&7. Keys come from winning fights.'
+  Key-Earned: '&6+%amount% key &7for %crate%&7. You have &e%keys%&7.'
+  Won:
+    coins: '%crate%&7: &6%reward%&7.'
+    new-kit: '%crate%&7: a new kit, &f%reward%&7!'
+    upgrade: '%crate%&7: an upgrade, &f%reward%&7!'
+  Many-Summary: 'Opened &f%amount%&7: &f%kits%&7 new kits, &f%upgrades%&7 upgrades, &6%coins% coins&7. Keys left: &e%keys%&7.'
+  Reward:
+    coins: '&6%coins% coins'
+    new-kit: '%kit%'
+    upgrade: '%kit%'
+  Reward-Lore:
+    coins: ['&7Coins']
+    new-kit: ['&aA new kit']
+    upgrade: ['&eAn upgrade']
+
+Challenges:
+  Taken: 'You take on %challenge%&7. Goal: &f%goal% %stat%&7.'
+  Dropped: 'You drop %challenge%&7.'
+  Completed: '&aChallenge done: %challenge%&a!'
+  Already-Done: 'You have already done %challenge%&7 this time round.'
+  Locked-Slot: '&cLocked by your challenge'
+  Periods:
+    daily: 'Daily'
+    weekly: 'Weekly'
+    monthly: 'Monthly'
+    once: 'Once'
+
+Achievements:
+  Unlocked: '&bAchievement: %achievement%&b!'
+  Broadcast: '&f%player%&7 unlocked %achievement%&7.'
+
+Rewards:
+  Coins: '&6+%coins% coins'
+  Keys: '&6+%amount% key &7for %crate%'
+  Kit: 'You received &f%kit%&7.'
+  Text:
+    coins: '%coins% coins'
+    keys: '%amount% key for %crate%'
+    kit: 'The kit %kit%'
+    other: 'A surprise'
+
+Soup-Station:
+  Cooldown: 'More soup in &f%seconds%s&7.'
+  Added: 'This block now hands out soup.'
+  Removed: 'This block no longer hands out soup.'

@@ -1,0 +1,47 @@
+# KitPvP achievements: a one-time reward for reaching a statistic.
+#   Stat:   any statistic (kills, close_kills, duel_wins, soups, abilities_used, projectiles_hit,
+#           streaks_earned, best_streak, crates_opened, challenges_completed, coins ...)
+#   Steps:  amount: coins        or        amount: [reward lines]   (coins: keys: kit: console: message:)
+#   Name:   %amount% is the step. Name-One: the name for a step of 1 ("1 duel won").
+# The amounts and coins below are the old PvP server's.
+Achievements:
+  kills:
+    Name: '&b%amount% wins'
+    Name-One: '&b1 win'
+    Icon: DIAMOND_SWORD
+    Stat: kills
+    Steps: {1: 10, 10: 50, 50: 250, 100: 500, 200: 1000, 300: 1500, 400: 2000, 500: 2500, 600: 3000, 700: 3500, 800: 4000, 900: 4500, 1000: 5000}
+  projectiles:
+    Name: '&b%amount% shots landed'
+    Name-One: '&b1 shot landed'
+    Icon: BOW
+    Stat: projectiles_hit
+    Steps: {1: 10, 5: 50, 20: 200, 50: 500, 100: 1000, 200: 2000, 300: 3000, 400: 4000, 500: 5000}
+  duels:
+    Name: '&b%amount% duels won'
+    Name-One: '&b1 duel won'
+    Icon: IRON_SWORD
+    Stat: duel_wins
+    Steps: {1: 100, 5: 500, 20: 2000, 50: 5000, 100: 10000, 150: 15000, 200: 20000, 250: 25000, 300: 30000}
+  abilities:
+    Name: '&b%amount% abilities used'
+    Name-One: '&b1 ability used'
+    Icon: BLAZE_POWDER
+    Stat: abilities_used
+    Steps: {1: 5, 5: 25, 50: 250, 100: 500, 200: 1000, 300: 1500, 400: 2000, 500: 2500, 750: 3750, 1000: 5000}
+  soups:
+    Name: '&b%amount% soups eaten'
+    Name-One: '&b1 soup eaten'
+    Icon: MUSHROOM_STEW
+    Stat: soups
+    Steps: {1: 5, 10: 20, 100: 200, 500: 1000, 1000: 2000, 1500: 3000, 2000: 4000, 3000: 6000, 4000: 8000, 5000: 10000}
+  streaks:
+    Name: '&b%amount% win streaks'
+    Icon: FIRE_CHARGE
+    Stat: streaks_earned
+    Steps: {5: 50, 10: 100, 20: 200, 50: 500, 100: 1000, 200: 2000}
+  best-streak:
+    Name: '&b%amount% win streak'
+    Icon: BLAZE_ROD
+    Stat: best_streak
+    Steps: {2: 20, 3: 30, 5: 50, 10: 100, 15: 150, 20: 200, 25: 250}
